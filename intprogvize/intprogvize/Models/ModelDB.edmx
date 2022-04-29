@@ -1,0 +1,360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="DB03Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Ders">
+          <Key>
+            <PropertyRef Name="dersId" />
+          </Key>
+          <Property Name="dersId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dersKodu" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="dersAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Kayit">
+          <Key>
+            <PropertyRef Name="kayitId" />
+          </Key>
+          <Property Name="kayitId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kayitDersId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kayitOgrId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="kayitOgId" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ogrenci">
+          <Key>
+            <PropertyRef Name="ogrId" />
+          </Key>
+          <Property Name="ogrId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrNo" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrAdsoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrKullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogrSifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Ogretmen">
+          <Key>
+            <PropertyRef Name="ogId" />
+          </Key>
+          <Property Name="ogId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogAdsoyad" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogKullaniciAdi" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="ogSifre" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Yetki">
+          <Key>
+            <PropertyRef Name="yetkiId" />
+          </Key>
+          <Property Name="yetkiId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="yetki" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Kayit_ToDers">
+          <End Role="Ders" Type="Self.Ders" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ders">
+              <PropertyRef Name="dersId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitDersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_ToOgrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="ogrId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitOgrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_ToOgretmen">
+          <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogretmen">
+              <PropertyRef Name="ogId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitOgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yetki_ToOgrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="ogrId" />
+            </Principal>
+            <Dependent Role="Yetki">
+              <PropertyRef Name="yetkiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yetki_ToOgretmen">
+          <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="1" />
+          <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ogretmen">
+              <PropertyRef Name="ogId" />
+            </Principal>
+            <Dependent Role="Yetki">
+              <PropertyRef Name="yetkiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB03ModelStoreContainer">
+          <EntitySet Name="Ders" EntityType="Self.Ders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Kayit" EntityType="Self.Kayit" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Ogretmen" EntityType="Self.Ogretmen" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Yetki" EntityType="Self.Yetki" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Kayit_ToDers" Association="Self.FK_Kayit_ToDers">
+            <End Role="Ders" EntitySet="Ders" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_ToOgrenci" Association="Self.FK_Kayit_ToOgrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_ToOgretmen" Association="Self.FK_Kayit_ToOgretmen">
+            <End Role="Ogretmen" EntitySet="Ogretmen" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yetki_ToOgrenci" Association="Self.FK_Yetki_ToOgrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="Yetki" EntitySet="Yetki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yetki_ToOgretmen" Association="Self.FK_Yetki_ToOgretmen">
+            <End Role="Ogretmen" EntitySet="Ogretmen" />
+            <End Role="Yetki" EntitySet="Yetki" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DB03Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Ders">
+          <Key>
+            <PropertyRef Name="dersId" />
+          </Key>
+          <Property Name="dersId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dersKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="dersAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_ToDers" FromRole="Ders" ToRole="Kayit" />
+        </EntityType>
+        <EntityType Name="Kayit">
+          <Key>
+            <PropertyRef Name="kayitId" />
+          </Key>
+          <Property Name="kayitId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kayitDersId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kayitOgrId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="kayitOgId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Ders" Relationship="Self.FK_Kayit_ToDers" FromRole="Kayit" ToRole="Ders" />
+          <NavigationProperty Name="Ogrenci" Relationship="Self.FK_Kayit_ToOgrenci" FromRole="Kayit" ToRole="Ogrenci" />
+          <NavigationProperty Name="Ogretmen" Relationship="Self.FK_Kayit_ToOgretmen" FromRole="Kayit" ToRole="Ogretmen" />
+        </EntityType>
+        <EntityType Name="Ogrenci">
+          <Key>
+            <PropertyRef Name="ogrId" />
+          </Key>
+          <Property Name="ogrId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrNo" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrAdsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrKullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogrSifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_ToOgrenci" FromRole="Ogrenci" ToRole="Kayit" />
+          <NavigationProperty Name="Yetki" Relationship="Self.FK_Yetki_ToOgrenci" FromRole="Ogrenci" ToRole="Yetki" />
+        </EntityType>
+        <EntityType Name="Ogretmen">
+          <Key>
+            <PropertyRef Name="ogId" />
+          </Key>
+          <Property Name="ogId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogAdsoyad" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogKullaniciAdi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ogSifre" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Kayit" Relationship="Self.FK_Kayit_ToOgretmen" FromRole="Ogretmen" ToRole="Kayit" />
+          <NavigationProperty Name="Yetki" Relationship="Self.FK_Yetki_ToOgretmen" FromRole="Ogretmen" ToRole="Yetki" />
+        </EntityType>
+        <EntityType Name="Yetki">
+          <Key>
+            <PropertyRef Name="yetkiId" />
+          </Key>
+          <Property Name="yetkiId" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="yetki1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Ogrenci" Relationship="Self.FK_Yetki_ToOgrenci" FromRole="Yetki" ToRole="Ogrenci" />
+          <NavigationProperty Name="Ogretmen" Relationship="Self.FK_Yetki_ToOgretmen" FromRole="Yetki" ToRole="Ogretmen" />
+        </EntityType>
+        <Association Name="FK_Kayit_ToDers">
+          <End Role="Ders" Type="Self.Ders" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ders">
+              <PropertyRef Name="dersId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitDersId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_ToOgrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="ogrId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitOgrId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Kayit_ToOgretmen">
+          <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="1" />
+          <End Role="Kayit" Type="Self.Kayit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Ogretmen">
+              <PropertyRef Name="ogId" />
+            </Principal>
+            <Dependent Role="Kayit">
+              <PropertyRef Name="kayitOgId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yetki_ToOgrenci">
+          <End Role="Ogrenci" Type="Self.Ogrenci" Multiplicity="1" />
+          <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ogrenci">
+              <PropertyRef Name="ogrId" />
+            </Principal>
+            <Dependent Role="Yetki">
+              <PropertyRef Name="yetkiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Yetki_ToOgretmen">
+          <End Role="Ogretmen" Type="Self.Ogretmen" Multiplicity="1" />
+          <End Role="Yetki" Type="Self.Yetki" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Ogretmen">
+              <PropertyRef Name="ogId" />
+            </Principal>
+            <Dependent Role="Yetki">
+              <PropertyRef Name="yetkiId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DB03Entities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Ders" EntityType="Self.Ders" />
+          <EntitySet Name="Kayit" EntityType="Self.Kayit" />
+          <EntitySet Name="Ogrenci" EntityType="Self.Ogrenci" />
+          <EntitySet Name="Ogretmen" EntityType="Self.Ogretmen" />
+          <EntitySet Name="Yetki" EntityType="Self.Yetki" />
+          <AssociationSet Name="FK_Kayit_ToDers" Association="Self.FK_Kayit_ToDers">
+            <End Role="Ders" EntitySet="Ders" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_ToOgrenci" Association="Self.FK_Kayit_ToOgrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Kayit_ToOgretmen" Association="Self.FK_Kayit_ToOgretmen">
+            <End Role="Ogretmen" EntitySet="Ogretmen" />
+            <End Role="Kayit" EntitySet="Kayit" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yetki_ToOgrenci" Association="Self.FK_Yetki_ToOgrenci">
+            <End Role="Ogrenci" EntitySet="Ogrenci" />
+            <End Role="Yetki" EntitySet="Yetki" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Yetki_ToOgretmen" Association="Self.FK_Yetki_ToOgretmen">
+            <End Role="Ogretmen" EntitySet="Ogretmen" />
+            <End Role="Yetki" EntitySet="Yetki" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DB03ModelStoreContainer" CdmEntityContainer="DB03Entities">
+          <EntitySetMapping Name="Ders">
+            <EntityTypeMapping TypeName="DB03Model.Ders">
+              <MappingFragment StoreEntitySet="Ders">
+                <ScalarProperty Name="dersId" ColumnName="dersId" />
+                <ScalarProperty Name="dersKodu" ColumnName="dersKodu" />
+                <ScalarProperty Name="dersAdi" ColumnName="dersAdi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Kayit">
+            <EntityTypeMapping TypeName="DB03Model.Kayit">
+              <MappingFragment StoreEntitySet="Kayit">
+                <ScalarProperty Name="kayitId" ColumnName="kayitId" />
+                <ScalarProperty Name="kayitDersId" ColumnName="kayitDersId" />
+                <ScalarProperty Name="kayitOgrId" ColumnName="kayitOgrId" />
+                <ScalarProperty Name="kayitOgId" ColumnName="kayitOgId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogrenci">
+            <EntityTypeMapping TypeName="DB03Model.Ogrenci">
+              <MappingFragment StoreEntitySet="Ogrenci">
+                <ScalarProperty Name="ogrId" ColumnName="ogrId" />
+                <ScalarProperty Name="ogrNo" ColumnName="ogrNo" />
+                <ScalarProperty Name="ogrAdsoyad" ColumnName="ogrAdsoyad" />
+                <ScalarProperty Name="ogrKullaniciAdi" ColumnName="ogrKullaniciAdi" />
+                <ScalarProperty Name="ogrSifre" ColumnName="ogrSifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Ogretmen">
+            <EntityTypeMapping TypeName="DB03Model.Ogretmen">
+              <MappingFragment StoreEntitySet="Ogretmen">
+                <ScalarProperty Name="ogId" ColumnName="ogId" />
+                <ScalarProperty Name="ogAdsoyad" ColumnName="ogAdsoyad" />
+                <ScalarProperty Name="ogKullaniciAdi" ColumnName="ogKullaniciAdi" />
+                <ScalarProperty Name="ogSifre" ColumnName="ogSifre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Yetki">
+            <EntityTypeMapping TypeName="DB03Model.Yetki">
+              <MappingFragment StoreEntitySet="Yetki">
+                <ScalarProperty Name="yetkiId" ColumnName="yetkiId" />
+                <ScalarProperty Name="yetki1" ColumnName="yetki" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
